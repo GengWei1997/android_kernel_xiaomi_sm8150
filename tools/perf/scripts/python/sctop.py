@@ -62,18 +62,18 @@ def print_syscall_totals(interval):
 	while 1:
 		clear_term()
 		if for_comm is not None:
-			print "\nsyscall events for %s:\n\n" % (for_comm),
+			print("\nsyscall events for %s:\n\n" % (for_comm),)
 		else:
-			print "\nsyscall events:\n\n",
+			print("\nsyscall events:\n\n",)
 
-		print "%-40s  %10s\n" % ("event", "count"),
-		print "%-40s  %10s\n" % ("----------------------------------------", \
+		print("%-40s  %10s\n" % ("event", "count"),)
+		print("%-40s  %10s\n" % ("----------------------------------------", \)
 						 "----------"),
 
-		for id, val in sorted(syscalls.iteritems(), key = lambda(k, v): (v, k), \
+		for id, val in sorted(syscalls.items(), key = lambda(k, v): (v, k), \
 					      reverse = True):
 			try:
-				print "%-40s  %10d\n" % (syscall_name(id), val),
+				print("%-40s  %10d\n" % (syscall_name(id), val),)
 			except TypeError:
 				pass
 		syscalls.clear()

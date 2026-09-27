@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 #
 # Tool for analyzing suspend/resume timing
 # Copyright (c) 2013, Intel Corporation.
@@ -290,9 +290,9 @@ class SystemValues:
 		out = dmidecode(self.mempath, True)
 		fmt = '%-24s: %s'
 		for name in sorted(out):
-			print fmt % (name, out[name])
-		print fmt % ('cpucount', ('%d' % self.cpucount))
-		print fmt % ('memtotal', ('%d kB' % self.memtotal))
+			print(fmt % (name, out[name]))
+		print(fmt % ('cpucount', ('%d' % self.cpucount)))
+		print(fmt % ('memtotal', ('%d kB' % self.memtotal)))
 	def cpuInfo(self):
 		self.cpucount = 0
 		fp = open('/proc/cpuinfo', 'r')
@@ -406,9 +406,9 @@ class SystemValues:
 			if 'func' in self.tracefuncs[i]:
 				i = self.tracefuncs[i]['func']
 			if i in master:
-				print i
+				print(i)
 			else:
-				print self.colorText(i)
+				print(self.colorText(i))
 	def setFtraceFilterFunctions(self, list):
 		fp = open(self.tpath+'available_filter_functions')
 		master = fp.read().split('\n')
@@ -718,7 +718,7 @@ class DevProps:
 	def out(self, dev):
 		return '%s,%s,%d;' % (dev, self.altname, self.async)
 	def debug(self, dev):
-		print '%s:\n\taltname = %s\n\t  async = %s' % (dev, self.altname, self.async)
+		print('%s:\n\taltname = %s\n\t  async = %s' % (dev, self.altname, self.async))
 	def altName(self, dev):
 		if not self.altname or self.altname == dev:
 			return dev
@@ -1585,13 +1585,13 @@ class FTraceCallGraph:
 		# handle low misalignments by inserting returns
 		if prelinedep < self.depth:
 			if debug and last:
-				print '-------- task %d --------' % self.pid
+				print('-------- task %d --------' % self.pid)
 				last.debugPrint()
 			idx = 0
 			# add return calls to get the depth down
 			while prelinedep < self.depth:
 				if debug:
-					print 'MISALIGN LOW (add returns): C%d - eC%d' % (self.depth, prelinedep)
+					print('MISALIGN LOW (add returns): C%d - eC%d' % (self.depth, prelinedep))
 				self.depth -= 1
 				if idx == 0 and last and last.fcall and not last.freturn:
 					# special case, turn last call into a leaf
@@ -1611,17 +1611,17 @@ class FTraceCallGraph:
 				idx += 1
 			if debug:
 				line.debugPrint()
-				print ''
+				print('')
 		# handle high misalignments by inserting calls
 		elif prelinedep > self.depth:
 			if debug and last:
-				print '-------- task %d --------' % self.pid
+				print('-------- task %d --------' % self.pid)
 				last.debugPrint()
 			idx = 0
 			# add calls to get the depth up
 			while prelinedep > self.depth:
 				if debug:
-					print 'MISALIGN HIGH (add calls): C%d - eC%d' % (self.depth, prelinedep)
+					print('MISALIGN HIGH (add calls): C%d - eC%d' % (self.depth, prelinedep))
 				if idx == 0 and line.freturn and not line.fcall:
 					# special case, turn this return into a leaf
 					line.fcall = True
@@ -1640,7 +1640,7 @@ class FTraceCallGraph:
 				idx += 1
 			if debug:
 				line.debugPrint()
-				print ''
+				print('')
 		# process the call and set the new depth
 		if(line.fcall and not line.freturn):
 			self.depth += 1
@@ -1723,7 +1723,7 @@ class FTraceCallGraph:
 			elif(l.freturn and not l.fcall):
 				if(l.depth not in stack):
 					if debug:
-						print 'Post Process Error: Depth missing'
+						print('Post Process Error: Depth missing')
 						l.debugPrint()
 					return False
 				# calculate call length from call/return lines
@@ -1737,7 +1737,7 @@ class FTraceCallGraph:
 			return True
 		elif(cnt < 0):
 			if debug:
-				print 'Post Process Error: Depth is less than 0'
+				print('Post Process Error: Depth is less than 0')
 			return False
 		# trace ended before call tree finished
 		return self.repair(cnt)
@@ -2003,7 +2003,7 @@ class Timeline:
 					standardphases.append((t, p))
 		self.height = self.scaleH + (maxrows*self.rowH)
 		self.bodyH = self.height - self.scaleH
-		# if there is 1 line per row, draw them the standard way
+		# if there == 1 line per row, draw them the standard way
 		for t, p in standardphases:
 			for i in sorted(self.rowheight[t][p]):
 				self.rowheight[t][p][i] = self.bodyH/len(self.rowlines[t][p])
@@ -3551,7 +3551,7 @@ def createHTML(testruns):
 					mMax = testruns[1].start
 				left = '%f' % ((((m0-t0)*100.0)+sysvals.srgap/2)/tTotal)
 			mTotal = mMax - m0
-			# if a timeline block is 0 length, skip altogether
+			# if a timeline block == 0 length, skip altogether
 			if mTotal == 0:
 				continue
 			width = '%f' % (((mTotal*100.0)-sysvals.srgap/2)/tTotal)
@@ -5470,7 +5470,7 @@ if __name__ == '__main__':
 		elif(cmd == 'usbtopo'):
 			detectUSB()
 		elif(cmd == 'modes'):
-			print getModes()
+			print(getModes())
 		elif(cmd == 'flist'):
 			sysvals.getFtraceFilterFunctions(True)
 		elif(cmd == 'flistall'):

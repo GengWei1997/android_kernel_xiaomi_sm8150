@@ -79,7 +79,7 @@ def prepare_env(cmdlist):
         (proc, foutput) = exec_cmd(cmd)
 
         if proc.returncode not in exit_codes:
-            print
+            print()
             print("Could not execute:")
             print(cmd)
             print("\nError message:")

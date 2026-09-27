@@ -19,7 +19,7 @@ from perf_trace_context import *
 unhandled = autodict()
 
 def trace_begin():
-	print "trace_begin"
+	print("trace_begin")
 	pass
 
 def trace_end():
@@ -33,7 +33,7 @@ def irq__softirq_entry(event_name, context, common_cpu,
 
                 print_uncommon(context)
 
-		print "vec=%s\n" % \
+		print("vec=%s\n" % \)
 		(symbol_str("irq__softirq_entry", "vec", vec)),
 
 def kmem__kmalloc(event_name, context, common_cpu,
@@ -45,7 +45,7 @@ def kmem__kmalloc(event_name, context, common_cpu,
 
                 print_uncommon(context)
 
-		print "call_site=%u, ptr=%u, bytes_req=%u, " \
+		print("call_site=%u, ptr=%u, bytes_req=%u, " \)
 		"bytes_alloc=%u, gfp_flags=%s\n" % \
 		(call_site, ptr, bytes_req, bytes_alloc,
 
@@ -58,12 +58,12 @@ def trace_unhandled(event_name, context, event_fields_dict):
         unhandled[event_name] = 1
 
 def print_header(event_name, cpu, secs, nsecs, pid, comm):
-	print "%-20s %5u %05u.%09u %8u %-20s " % \
+	print("%-20s %5u %05u.%09u %8u %-20s " % \)
 	(event_name, cpu, secs, nsecs, pid, comm),
 
 # print trace fields not included in handler args
 def print_uncommon(context):
-    print "common_preempt_count=%d, common_flags=%s, common_lock_depth=%d, " \
+    print("common_preempt_count=%d, common_flags=%s, common_lock_depth=%d, " \)
         % (common_pc(context), trace_flag_str(common_flags(context)), \
                common_lock_depth(context))
 
@@ -72,11 +72,11 @@ def print_unhandled():
     if not keys:
         return
 
-    print "\nunhandled events:\n\n",
+    print("\nunhandled events:\n\n",)
 
-    print "%-40s  %10s\n" % ("event", "count"),
-    print "%-40s  %10s\n" % ("----------------------------------------", \
+    print("%-40s  %10s\n" % ("event", "count"),)
+    print("%-40s  %10s\n" % ("----------------------------------------", \)
                                  "-----------"),
 
     for event_name in keys:
-	print "%-40s  %10d\n" % (event_name, unhandled[event_name])
+	print("%-40s  %10d\n" % (event_name, unhandled[event_name]))

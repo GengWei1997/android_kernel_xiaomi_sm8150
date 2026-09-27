@@ -123,4 +123,4 @@ def trace_end():
     list = lines.keys()
     list.sort()
     for stack in list:
-        print "%s %d" % (stack, lines[stack])
+        print("%s %d" % (stack, lines[stack]))

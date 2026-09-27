@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 #
 # Tool for analyzing boot timing
 # Copyright (c) 2013, Intel Corporation.
@@ -160,11 +160,11 @@ class SystemValues(aslib.SystemValues):
 		return cmdline
 	def manualRebootRequired(self):
 		cmdline = self.kernelParams()
-		print 'To generate a new timeline manually, follow these steps:\n'
-		print '1. Add the CMDLINE string to your kernel command line.'
-		print '2. Reboot the system.'
-		print '3. After reboot, re-run this tool with the same arguments but no command (w/o -reboot or -manual).\n'
-		print 'CMDLINE="%s"' % cmdline
+		print('To generate a new timeline manually, follow these steps:\n')
+		print('1. Add the CMDLINE string to your kernel command line.')
+		print('2. Reboot the system.')
+		print('3. After reboot, re-run this tool with the same arguments but no command (w/o -reboot or -manual).\n')
+		print('CMDLINE="%s"' % cmdline)
 		sys.exit()
 	def getExec(self, cmd):
 		dirlist = ['/sbin', '/bin', '/usr/sbin', '/usr/bin',
@@ -395,7 +395,7 @@ def parseTraceLog(data):
 				continue
 			# match cg data to devices
 			if not data.deviceMatch(pid, cg):
-				print ' BAD: %s %s-%d [%f - %f]' % (cg.name, proc, pid, cg.start, cg.end)
+				print(' BAD: %s %s-%d [%f - %f]' % (cg.name, proc, pid, cg.start, cg.end))
 
 # Function: retrieveLogs
 # Description:
@@ -691,8 +691,8 @@ def updateCron(restore=False):
 		op.write('@reboot python %s\n' % sysvals.cronjobCmdString())
 		op.close()
 		res = call([cmd, cronfile])
-	except Exception, e:
-		print 'Exception: %s' % str(e)
+	except Exception as e:
+		print('Exception: %s' % str(e))
 		shutil.move(backfile, cronfile)
 		res = -1
 	if res != 0:
@@ -707,8 +707,8 @@ def updateGrub(restore=False):
 		try:
 			call(sysvals.blexec, stderr=PIPE, stdout=PIPE,
 				env={'PATH': '.:/sbin:/usr/sbin:/usr/bin:/sbin:/bin'})
-		except Exception, e:
-			print 'Exception: %s\n' % str(e)
+		except Exception as e:
+			print('Exception: %s\n' % str(e))
 		return
 	# extract the option and create a grub config without it
 	sysvals.rootUser(True)
@@ -754,8 +754,8 @@ def updateGrub(restore=False):
 		op.close()
 		res = call(sysvals.blexec)
 		os.remove(grubfile)
-	except Exception, e:
-		print 'Exception: %s' % str(e)
+	except Exception as e:
+		print('Exception: %s' % str(e))
 		res = -1
 	# cleanup
 	shutil.move(tempfile, grubfile)
@@ -779,7 +779,7 @@ def updateKernelParams(restore=False):
 def doError(msg, help=False):
 	if help == True:
 		printHelp()
-	print 'ERROR: %s\n' % msg
+	print('ERROR: %s\n' % msg)
 	sys.exit()
 
 # Function: printHelp
@@ -942,10 +942,10 @@ if __name__ == '__main__':
 			updateKernelParams()
 		elif cmd == 'flistall':
 			for f in sysvals.getBootFtraceFilterFunctions():
-				print f
+				print(f)
 		elif cmd == 'checkbl':
 			sysvals.getBootLoader()
-			print 'Boot Loader: %s\n%s' % (sysvals.bootloader, sysvals.blexec)
+			print('Boot Loader: %s\n%s' % (sysvals.bootloader, sysvals.blexec))
 		elif(cmd == 'sysinfo'):
 			sysvals.printSystemInfo()
 		sys.exit()
